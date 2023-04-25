@@ -1,0 +1,10 @@
+Django==4.2
+Pillow==9.5.0
+jinja2==3.1.2
+gunicorn==20.1.0
+contextvars
+typing-extensions==4.1.1
+aiohttp==3.8.4
+click==8.0.4
+wheel==0.40.0
+multidict==4.5
