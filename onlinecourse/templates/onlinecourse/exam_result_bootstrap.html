@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title></title>
 </head>
 <body>
-
  <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -39,16 +39,46 @@
     {% if grade > 80 %}
     <div class="alert alert-success">
        <!--HINT Display passed info -->
+        <div class="alert alert-success">
+            <strong>Congratulations!</strong> You passed the exam with a score of {{ grade }}.
+        </div>
     </div>
         {% else %}
         <div class="alert alert-danger">
             <!--HINT Display failed info -->
+            <div class="alert alert-danger">
+                <strong>Sorry!</strong> You failed the exam with a score of {{ grade }}.
+            </div>
         </div>
         <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
         {% endif %}
         <div class="card-columns-vertical mt-1">
         <h5 class="">Exam results</h5>
             <!--HINT Display exam results-->
+            {% for question in questions %}
+            <div class="card bg-light mb-3">
+                <div class="card-header">{{ question.question_text }}</div>
+                <div class="card-body">
+                    {% for choice in question.choice_set.all %}
+                    {% if choice.id in selected_ids %}
+                    {% if choice.is_correct %}
+                    <div class="alert alert-success" role="alert">
+                        {{ choice.choice_text }} (correct)
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ choice.choice_text }} (incorrect)
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <div class="alert alert-secondary" role="alert">
+                        {{ choice.choice_text }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </body>
